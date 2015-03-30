@@ -33,6 +33,7 @@ module Webshot
         height  = opts.fetch(:height, 90)
         gravity = opts.fetch(:gravity, "north")
         quality = opts.fetch(:quality, 85)
+        selector = opts.fetch(:selector, "html")
 
         # Reset session before visiting url
         Capybara.reset_sessions! unless @session_started
@@ -50,7 +51,8 @@ module Webshot
           tmp.close
           begin
             # Save screenshot to file
-            page.driver.save_screenshot(tmp.path, :full => true)
+            # page.driver.save_screenshot(tmp.path, :full => true)
+            page.driver.save_screenshot(tmp.path, :selector => selector)
 
             # Resize screenshot
             thumb = MiniMagick::Image.open(tmp.path)
